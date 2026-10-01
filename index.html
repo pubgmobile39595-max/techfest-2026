@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>TechFest 2026 — Teknoloji Konferansı</title>
+<meta name="description" content="TechFest 2026 - Türkiye'nin en büyük teknoloji konferansı. 15-17 Kasım 2026, İstanbul." />
+<meta name="theme-color" content="#0a0a1a" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text x='50' y='75' font-size='80' text-anchor='middle'>🚀</text></svg>" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=1" />
+</head>
+<body>
+
+<nav class="nav">
+  <div class="container nav__inner">
+    <a href="#" class="nav__logo">
+      <span class="nav__logo-icon">🚀</span>
+      <span class="nav__logo-text">TechFest<span class="grad">26</span></span>
+    </a>
+    <div class="nav__links">
+      <a href="#speakers">Konuşmacılar</a>
+      <a href="#schedule">Program</a>
+      <a href="#tickets">Biletler</a>
+      <a href="#sponsors">Sponsorlar</a>
+      <a href="#faq">SSS</a>
+    </div>
+    <div class="nav__actions">
+      <button class="icon-btn" id="langBtn" title="Dil">TR</button>
+      <button class="icon-btn" id="themeBtn" title="Tema">☀️</button>
+      <button class="btn btn--primary btn--sm" id="registerBtn">Kayıt Ol</button>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero__glow"></div>
+  <div class="hero__grid"></div>
+  <div class="container hero__inner">
+    <div class="hero__badge">
+      <span class="dot"></span> 15-17 Kasım 2026 · İstanbul Kongre Merkezi
+    </div>
+    <h1 class="hero__title">
+      Geleceği <span class="grad">birlikte</span><br>inşa ediyoruz
+    </h1>
+    <p class="hero__sub">
+      Türkiye'nin en büyük teknoloji konferansı. 3 gün, 80+ konuşmacı, 5.000+ katılımcı.
+    </p>
+    <div class="hero__cta">
+      <button class="btn btn--primary" id="heroRegister">🎟️ Bilet Al</button>
+      <a href="#schedule" class="btn btn--ghost">📅 Programı Gör</a>
+    </div>
+    <div class="countdown" id="countdown">
+      <div class="cd-box"><div class="cd-num" id="cdDays">00</div><div class="cd-label">Gün</div></div>
+      <div class="cd-box"><div class="cd-num" id="cdHours">00</div><div class="cd-label">Saat</div></div>
+      <div class="cd-box"><div class="cd-num" id="cdMinutes">00</div><div class="cd-label">Dakika</div></div>
+      <div class="cd-box"><div class="cd-num" id="cdSeconds">00</div><div class="cd-label">Saniye</div></div>
+    </div>
+    <div class="hero__stats">
+      <div><strong>80+</strong><span>Konuşmacı</span></div>
+      <div><strong>5.000+</strong><span>Katılımcı</span></div>
+      <div><strong>3</strong><span>Gün</span></div>
+      <div><strong>50+</strong><span>Oturum</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="speakers">
+  <div class="container">
+    <div class="section__head">
+      <span class="eyebrow">Konuşmacılar</span>
+      <h2>Sektörün <span class="grad">liderleri</span></h2>
+      <p class="section__lead">Türkiye ve dünyadan 80+ uzman konuşmacı</p>
+    </div>
+    <div class="speakers" id="speakersGrid"></div>
+  </div>
+</section>
+
+<section class="section section--alt" id="schedule">
+  <div class="container">
+    <div class="section__head">
+      <span class="eyebrow">Program</span>
+      <h2>3 günlük <span class="grad">dolu program</span></h2>
+    </div>
+    <div class="schedule-tabs" id="scheduleTabs">
+      <button class="tab-btn active" data-day="1">1. Gün · 15 Kasım</button>
+      <button class="tab-btn" data-day="2">2. Gün · 16 Kasım</button>
+      <button class="tab-btn" data-day="3">3. Gün · 17 Kasım</button>
+    </div>
+    <div class="schedule" id="scheduleGrid"></div>
+  </div>
+</section>
+
+<section class="section" id="tickets">
+  <div class="container">
+    <div class="section__head">
+      <span class="eyebrow">Biletler</span>
+      <h2>Size uygun <span class="grad">paketi seçin</span></h2>
+    </div>
+    <div class="tickets">
+      <div class="ticket">
+        <div class="ticket__icon">🎫</div>
+        <h3>Standart</h3>
+        <div class="ticket__price">₺1.500<span>/kişi</span></div>
+        <ul class="ticket__features">
+          <li>✅ 3 gün tam erişim</li>
+          <li>✅ Tüm oturumlar</li>
+          <li>✅ Dijital sertifika</li>
+          <li>✅ Kahve & atıştırmalık</li>
+        </ul>
+        <button class="btn btn--ghost ticket-btn" data-ticket="Standart" data-price="1500">Bilet Al</button>
+      </div>
+      <div class="ticket ticket--featured">
+        <div class="ticket__badge">⭐ EN POPÜLER</div>
+        <div class="ticket__icon">💎</div>
+        <h3>Premium</h3>
+        <div class="ticket__price">₺2.900<span>/kişi</span></div>
+        <ul class="ticket__features">
+          <li>✅ Standart'ın tümü</li>
+          <li>✅ Ön sıra oturma</li>
+          <li>✅ Konuşmacılarla networking</li>
+          <li>✅ Öğle yemeği dahil</li>
+          <li>✅ Premium çanta & hediyeler</li>
+        </ul>
+        <button class="btn btn--primary ticket-btn" data-ticket="Premium" data-price="2900">Bilet Al</button>
+      </div>
+      <div class="ticket">
+        <div class="ticket__icon">👑</div>
+        <h3>VIP</h3>
+        <div class="ticket__price">₺6.500<span>/kişi</span></div>
+        <ul class="ticket__features">
+          <li>✅ Premium'un tümü</li>
+          <li>✅ VIP lounge erişimi</li>
+          <li>✅ Özel akşam yemeği</li>
+          <li>✅ Konuşmacı meet & greet</li>
+          <li>✅ 1 yıl online arşiv</li>
+        </ul>
+        <button class="btn btn--ghost ticket-btn" data-ticket="VIP" data-price="6500">Bilet Al</button>
+      </div>
+    </div>
+    <div class="live-counter">
+      <span class="live-dot"></span>
+      <strong id="liveCount">3.847</strong> kişi kayıt oldu · Son <strong id="spotsLeft">153</strong> bilet!
+    </div>
+  </div>
+</section>
+
+<section class="section section--alt" id="sponsors">
+  <div class="container">
+    <div class="section__head">
+      <span class="eyebrow">Sponsorlar</span>
+      <h2>Bizi <span class="grad">destekleyenler</span></h2>
+    </div>
+    <div class="sponsor-tier">
+      <h3 class="sponsor-tier__title">🥇 Platin</h3>
+      <div class="sponsor-grid">
+        <div class="sponsor">GOOGLE</div>
+        <div class="sponsor">MICROSOFT</div>
+        <div class="sponsor">AMAZON</div>
+      </div>
+    </div>
+    <div class="sponsor-tier">
+      <h3 class="sponsor-tier__title">🥈 Altın</h3>
+      <div class="sponsor-grid">
+        <div class="sponsor">META</div>
+        <div class="sponsor">NETFLIX</div>
+        <div class="sponsor">SPOTIFY</div>
+        <div class="sponsor">UBER</div>
+      </div>
+    </div>
+    <div class="sponsor-tier">
+      <h3 class="sponsor-tier__title">🥉 Gümüş</h3>
+      <div class="sponsor-grid">
+        <div class="sponsor">TRENDYOL</div>
+        <div class="sponsor">HEPSIBURADA</div>
+        <div class="sponsor">GETIR</div>
+        <div class="sponsor">YEMEKSEPETI</div>
+        <div class="sponsor">PAPARA</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="venue">
+  <div class="container">
+    <div class="section__head">
+      <span class="eyebrow">Mekan</span>
+      <h2>İstanbul <span class="grad">Kongre Merkezi</span></h2>
+    </div>
+    <div class="venue-grid">
+      <div class="venue-info">
+        <div class="venue-info__item">
+          <div class="venue-info__icon">📍</div>
+          <div><strong>Adres</strong><p>Harbiye, Şişli / İstanbul</p></div>
+        </div>
+        <div class="venue-info__item">
+          <div class="venue-info__icon">🚇</div>
+          <div><strong>Metro</strong><p>M2 · Taksim durağı 5 dk yürüme</p></div>
+        </div>
+        <div class="venue-info__item">
+          <div class="venue-info__icon">🅿️</div>
+          <div><strong>Otopark</strong><p>500 araç kapasiteli kapalı otopark</p></div>
+        </div>
+        <div class="venue-info__item">
+          <div class="venue-info__icon">☕</div>
+          <div><strong>Kafeterya</strong><p>Tüm gün açık, 20+ seçenek</p></div>
+        </div>
+        <a href="https://maps.google.com/?q=Istanbul+Congress+Center" target="_blank" class="btn btn--primary">🗺️ Yol Tarifi</a>
+      </div>
+      <div class="venue-map">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3010!2d28.98!3d41.04!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zSXN0YW5idWw!5e0!3m2!1str!2str!4v1700000000000" width="100%" height="450" style="border:0;border-radius:20px" allowfullscreen loading="lazy"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--alt" id="gallery">
+  <div class="container">
+    <div class="section__head">
+      <span class="eyebrow">Galeri</span>
+      <h2>Geçmiş <span class="grad">etkinliklerden</span></h2>
+    </div>
+    <div class="gallery" id="galleryGrid"></div>
+  </div>
+</section>
+
+<section class="section" id="faq">
+  <div class="container container--narrow">
+    <div class="section__head">
+      <span class="eyebrow">SSS</span>
+      <h2>Sıkça sorulan <span class="grad">sorular</span></h2>
+    </div>
+    <div class="faq">
+      <details class="faq__item">
+        <summary>Biletimi nasıl alabilirim?</summary>
+        <p>Web sitesinden kayıt olduktan sonra e-posta adresinize QR kodlu bilet gönderilir. Etkinlik girişinde QR kodu okutmanız yeterli.</p>
+      </details>
+      <details class="faq__item">
+        <summary>Bilet iadesi yapılıyor mu?</summary>
+        <p>Etkinlikten 7 gün öncesine kadar tam iade yapılır. Sonrasında iade kabul edilmez ancak başkasına devredilebilir.</p>
+      </details>
+      <details class="faq__item">
+        <summary>Online katılım mümkün mü?</summary>
+        <p>Evet! Tüm oturumlar canlı yayınlanır. Online bilet için ayrı bir seçenek sunulacaktır.</p>
+      </details>
+      <details class="faq__item">
+        <summary>Konaklama sağlanıyor mu?</summary>
+        <p>Anlaşmalı otellerde indirimli konaklama. Kayıt sonrası e-posta ile detaylar gönderilir.</p>
+      </details>
+      <details class="faq__item">
+        <summary>Öğrenci indirimi var mı?</summary>
+        <p>Evet! Geçerli öğrenci kimliği ile %50 indirim uygulanır. Kayıt sırasında belirtmeniz yeterli.</p>
+      </details>
+      <details class="faq__item">
+        <summary>Yemek & içecek dahil mi?</summary>
+        <p>Premium ve VIP paketlerde öğle yemeği dahildir. Standart pakette kahve ve atıştırmalık ikram edilir.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="section section--alt" id="testimonials">
+  <div class="container">
+    <div class="section__head">
+      <span class="eyebrow">Yorumlar</span>
+      <h2>Katılımcılar <span class="grad">ne diyor?</span></h2>
+    </div>
+    <div class="testimonials" id="testimonialsGrid"></div>
+  </div>
+</section>
+
+<section class="section cta-section">
+  <div class="container">
+    <div class="cta">
+      <h2>Geleceği birlikte inşa edelim</h2>
+      <p>Son 153 bilet! Hemen yerinizi ayırtın.</p>
+      <div class="cta__actions">
+        <button class="btn btn--primary btn--lg" id="ctaRegister">🎟️ Hemen Kayıt Ol</button>
+        <button class="btn btn--ghost btn--lg" id="addCalendarBtn">📅 Takvime Ekle</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <div class="footer__logo">🚀 TechFest<span class="grad">26</span></div>
+        <p class="footer__text">Türkiye'nin en büyük teknoloji konferansı. 15-17 Kasım 2026, İstanbul.</p>
+        <div class="footer__socials">
+          <a href="#" title="Twitter">𝕏</a>
+          <a href="#" title="Instagram">📸</a>
+          <a href="#" title="LinkedIn">💼</a>
+          <a href="#" title="YouTube">▶️</a>
+        </div>
+      </div>
+      <div>
+        <h4>Etkinlik</h4>
+        <a href="#speakers">Konuşmacılar</a>
+        <a href="#schedule">Program</a>
+        <a href="#tickets">Biletler</a>
+        <a href="#venue">Mekan</a>
+      </div>
+      <div>
+        <h4>Bilgi</h4>
+        <a href="#faq">SSS</a>
+        <a href="#">İletişim</a>
+        <a href="#">Basın Kiti</a>
+        <a href="#">Gizlilik</a>
+      </div>
+      <div>
+        <h4>Newsletter</h4>
+        <p class="footer__text">Yeniliklerden ilk siz haberdar olun.</p>
+        <form class="newsletter" id="newsletterForm">
+          <input type="email" placeholder="E-posta adresiniz" required />
+          <button type="submit">➤</button>
+        </form>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 TechFest. Tüm hakları saklıdır.</span>
+      <span>Sevgiyle hazırlandı · Türkiye 🇹🇷</span>
+    </div>
+  </div>
+</footer>
+
+<!-- KAYIT MODALI -->
+<div class="modal" id="registerModal">
+  <div class="modal__content">
+    <button class="modal__close" id="registerClose" type="button">✕</button>
+    <h2 class="modal__title">🎟️ Kayıt Ol</h2>
+    <p class="modal__sub" id="registerSub">TechFest 2026'ya katıl!</p>
+    <form class="register-form" id="registerForm" action="https://formspree.io/f/mjykljwb" method="POST">
+      <input type="hidden" name="bilet" id="ticketType" value="" />
+      <div class="form-row">
+        <label>Ad Soyad<input type="text" name="ad" required placeholder="Adınız" /></label>
+        <label>E-posta<input type="email" name="email" required placeholder="ornek@mail.com" /></label>
+      </div>
+      <div class="form-row">
+        <label>Telefon<input type="tel" name="telefon" required placeholder="+90 5xx" /></label>
+        <label>Şirket<input type="text" name="sirket" placeholder="Şirket (opsiyonel)" /></label>
+      </div>
+      <label>Katılım tipi
+        <select name="katilim" required>
+          <option value="yuz_yuze">Yüz yüze</option>
+          <option value="online">Online</option>
+        </select>
+      </label>
+      <button type="submit" class="btn btn--primary btn--lg">Kaydı Tamamla</button>
+      <div id="registerStatus" class="form-status"></div>
+    </form>
+  </div>
+</div>
+
+<!-- CANLI SOHBET -->
+<button class="fab" id="fabChat" title="Canlı Sohbet">💬</button>
+<button class="fab fab--top" id="fabTop" title="Yukarı">⬆️</button>
+
+<div class="chat-box" id="chatBox">
+  <div class="chat-box__header">
+    <span>💬 Canlı Destek</span>
+    <button id="chatClose" type="button">✕</button>
+  </div>
+  <div class="chat-box__body" id="chatBody">
+    <div class="chat-msg chat-msg--bot">Merhaba! TechFest 2026 hakkında sorularınızı yanıtlayabilirim. 👋</div>
+  </div>
+  <div class="chat-box__input">
+    <input type="text" id="chatInput" placeholder="Mesajınızı yazın..." />
+    <button id="chatSend" type="button">➤</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="script.js?v=1"></script>
+</body>
+  </html>
