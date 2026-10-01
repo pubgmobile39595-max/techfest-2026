@@ -365,3 +365,97 @@ window.addEventListener('load',function(){
   },800);
 });
 })();
+// ===== DÜZELTME PAKETİ =====
+(function(){
+'use strict';
+var $=function(s){return document.querySelector(s)};
+var $$=function(s){return document.querySelectorAll(s)};
+
+// 1. FOTOĞRAF YÜKLEME (DÜZELTİLDİ)
+function fixPhoto(){
+  if($('#uploadBtn'))return;
+  var g=$('#gallery .container');
+  if(!g)return;
+  var w=document.createElement('div');
+  w.style.cssText='margin-top:32px';
+  w.innerHTML='<label for="fileInput" id="uploadBtn" style="display:block;border:2px dashed var(--border);border-radius:16px;padding:32px;text-align:center;cursor:pointer;background:var(--bg-alt)"><div style="font-size:2.5rem;margin-bottom:10px;opacity:.6">📸</div><div style="font-size:.9rem;color:var(--text-dim)">Fotoğraf yükleyin (tıkla)</div></label><input type="file" id="fileInput" accept="image/*" multiple style="display:none"><div id="up" style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:16px"></div>';
+  g.appendChild(w);
+  var inp=$('#fileInput');
+  var p=$('#up');
+  inp.onchange=function(e){
+    Array.from(e.target.files).forEach(function(f){
+      if(!f.type.startsWith('image/'))return;
+      var r=new FileReader();
+      r.onload=function(ev){
+        var im=document.createElement('img');
+        im.src=ev.target.result;
+        im.style.cssText='width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px';
+        p.appendChild(im);
+      };
+      r.readAsDataURL(f);
+    });
+  };
+}
+
+// 2. BASIN KİTİ (DÜZELTİLDİ - tüm link metinlerini yakalar)
+function fixFooter(){
+  var modals={
+    'basın kiti':'<h3 style="font-family:monospace;font-size:1.5rem;margin-bottom:14px">📄 Basın Kiti</h3><p style="color:var(--text-dim);font-size:.9rem;margin-bottom:18px">TechFest 2026 medya dosyaları</p><div style="display:flex;flex-direction:column;gap:10px"><div style="padding:14px;background:var(--bg-alt);border-radius:10px;display:flex;justify-content:space-between"><span>🎨 Logo paketi</span><span style="color:var(--text-dim);font-size:.8rem">2.4 MB</span></div><div style="padding:14px;background:var(--bg-alt);border-radius:10px;display:flex;justify-content:space-between"><span>📰 Basın bülteni</span><span style="color:var(--text-dim);font-size:.8rem">840 KB</span></div><div style="padding:14px;background:var(--bg-alt);border-radius:10px;display:flex;justify-content:space-between"><span>📸 Konuşmacı fotoğrafları</span><span style="color:var(--text-dim);font-size:.8rem">12 MB</span></div><div style="padding:14px;background:var(--bg-alt);border-radius:10px;display:flex;justify-content:space-between"><span>📋 Bilgi dosyası</span><span style="color:var(--text-dim);font-size:.8rem">320 KB</span></div><div style="padding:14px;background:var(--bg-alt);border-radius:10px;display:flex;justify-content:space-between"><span>🎬 Tanıtım videosu</span><span style="color:var(--text-dim);font-size:.8rem">45 MB</span></div></div><button type="button" style="width:100%;padding:14px;margin-top:16px;background:linear-gradient(135deg,#7c3aed,#06b6d4);color:#fff;border:0;border-radius:12px;font-weight:600;cursor:pointer" onclick="alert(\'📥 İndiriliyor... (demo)\')">📥 Tümünü İndir</button>',
+    'iletişim':'<h3 style="font-family:monospace;font-size:1.5rem;margin-bottom:14px">📞 İletişim</h3><div style="display:flex;flex-direction:column;gap:12px"><div style="padding:14px;background:var(--bg-alt);border-radius:12px"><strong>📧 E-posta</strong><p style="color:var(--text-dim);font-size:.9rem;margin-top:4px">info@techfest.com.tr</p></div><div style="padding:14px;background:var(--bg-alt);border-radius:12px"><strong>📞 Telefon</strong><p style="color:var(--text-dim);font-size:.9rem;margin-top:4px">+90 (212) 555 00 00</p></div><div style="padding:14px;background:var(--bg-alt);border-radius:12px"><strong>📍 Adres</strong><p style="color:var(--text-dim);font-size:.9rem;margin-top:4px">Harbiye, Şişli / İstanbul</p></div></div>',
+    'gizlilik':'<h3 style="font-family:monospace;font-size:1.5rem;margin-bottom:14px">🔒 Gizlilik Politikası</h3><div style="display:flex;flex-direction:column;gap:14px;font-size:.88rem;line-height:1.6;color:var(--text-dim);max-height:400px;overflow-y:auto"><p><strong style="color:var(--text)">1. Toplanan Bilgiler</strong><br>Kayıt sırasında ad, e-posta, telefon bilgileriniz toplanır.</p><p><strong style="color:var(--text)">2. Kullanım Amacı</strong><br>Bilet gönderimi için kullanılır.</p><p><strong style="color:var(--text)">3. Üçüncü Taraflar</strong><br>Hiçbir koşulda paylaşılmaz.</p><p><strong style="color:var(--text)">4. KVKK Haklarınız</strong><br>Erişme, düzeltme ve silme hakkınız var.</p></div>'
+  };
+  document.addEventListener('click',function(e){
+    var a=e.target.closest('.footer__grid a');
+    if(!a)return;
+    var txt=a.textContent.trim().toLowerCase();
+    if(a.getAttribute('href')!=='#')return;
+    if(!modals[txt])return;
+    e.preventDefault();
+    e.stopPropagation();
+    var m=document.createElement('div');m.className='sp-modal active';
+    m.style.cssText='position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.85);backdrop-filter:blur(8px);display:grid;place-items:center;padding:20px';
+    m.innerHTML='<div style="background:var(--paper);border:1px solid var(--border);border-radius:24px;padding:32px;max-width:500px;width:100%;position:relative"><button type="button" style="position:absolute;top:14px;right:14px;background:var(--bg-alt);border:0;border-radius:50%;width:36px;height:36px;cursor:pointer;color:var(--text);font-size:1rem" class="fmclose">✕</button>'+modals[txt]+'</div>';
+    document.body.appendChild(m);
+    m.querySelector('.fmclose').onclick=function(){m.remove()};
+    m.onclick=function(ev){if(ev.target===m)m.remove()};
+  },true);
+}
+
+// 3. KONUŞMACI DETAY MODALI (DÜZELTİLDİ)
+function fixSpeaker(){
+  document.addEventListener('click',function(e){
+    var sp=e.target.closest('.speaker');
+    if(!sp)return;
+    if(e.target.closest('.fav-star'))return;
+    e.preventDefault();
+    e.stopPropagation();
+    var n=sp.querySelector('.speaker__name');
+    var r=sp.querySelector('.speaker__role');
+    if(!n)return;
+    var name=n.textContent;
+    var role=r?r.textContent:'';
+    var img='';
+    var imgEl=sp.querySelector('.speaker__img');
+    if(imgEl){
+      var bg=imgEl.style.backgroundImage;
+      if(bg)img=bg.replace(/^url\(["']?/,'').replace(/["']?\)$/,'');
+    }
+    var m=document.createElement('div');m.className='sp-modal active';
+    m.style.cssText='position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.85);backdrop-filter:blur(8px);display:grid;place-items:center;padding:20px';
+    m.innerHTML='<div style="background:var(--paper);border:1px solid var(--border);border-radius:24px;padding:32px;max-width:500px;width:100%;position:relative;text-align:center"><button type="button" style="position:absolute;top:14px;right:14px;background:var(--bg-alt);border:0;border-radius:50%;width:36px;height:36px;cursor:pointer;color:var(--text);font-size:1rem" class="smclose">✕</button>'+(img?'<div style="width:120px;height:120px;border-radius:50%;background-image:url('+img+');background-size:cover;background-position:center;margin:0 auto 16px;border:4px solid #7c3aed"></div>':'')+'<div style="font-family:monospace;font-size:1.3rem;margin-bottom:4px">'+name+'</div><div style="color:var(--text-dim);font-size:.9rem;margin-bottom:20px">'+role+'</div><div style="color:var(--text-dim);font-size:.9rem;line-height:1.6;padding:16px;background:var(--bg-alt);border-radius:12px;margin-bottom:16px">TechFest 2026\'nın değerli konuşmacısı. Sektörde uzun yıllara dayanan deneyimiyle ilham verici bir sunum gerçekleştirecek.</div><button type="button" style="width:100%;padding:14px;background:linear-gradient(135deg,#7c3aed,#06b6d4);color:#fff;border:0;border-radius:12px;font-weight:600;cursor:pointer" onclick="alert(\'✅ Takvime eklendi!\');this.closest(\'.sp-modal\').remove()">📅 Takvime Ekle</button></div>';
+    document.body.appendChild(m);
+    m.querySelector('.smclose').onclick=function(){m.remove()};
+    m.onclick=function(ev){if(ev.target===m)m.remove()};
+  },true);
+}
+
+// BAŞLAT
+window.addEventListener('load',function(){
+  setTimeout(function(){
+    try{fixPhoto()}catch(e){console.log('photo:',e)}
+    try{fixFooter()}catch(e){console.log('footer:',e)}
+    try{fixSpeaker()}catch(e){console.log('speaker:',e)}
+    console.log('✅ Düzeltmeler yüklendi');
+  },1000);
+});
+})();
