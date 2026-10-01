@@ -4,18 +4,20 @@ var $=function(s){return document.querySelector(s)};
 var $$=function(s){return document.querySelectorAll(s)};
 var LS={get:function(k,d){try{return JSON.parse(localStorage.getItem(k))||d}catch(e){return d}},set:function(k,v){localStorage.setItem(k,JSON.stringify(v))}};
 
+function safe(fn){try{fn()}catch(e){console.log('hata',e)}}
+
 var spData=[
-{n:'Dr. Ayşe Yılmaz',r:'AI Araştırmacısı · Google',i:'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400',b:'Yapay zeka alanında 15 yıllık deneyim. 50+ makale yazarı.'},
-{n:'Mehmet Demir',r:'CTO · Trendyol',i:'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400',b:'E-ticaret altyapısında 20+ yıl deneyim.'},
-{n:'Zeynep Kaya',r:'Founder · AI Startup',i:'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400',b:'AI girişimi kurucusu. 3 başarılı exit.'},
+{n:'Dr. Ayşe Yılmaz',r:'AI Araştırmacısı · Google',i:'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400',b:'Yapay zeka alanında 15 yıllık deneyim.'},
+{n:'Mehmet Demir',r:'CTO · Trendyol',i:'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400',b:'E-ticaret altyapısında 20+ yıl.'},
+{n:'Zeynep Kaya',r:'Founder · AI Startup',i:'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400',b:'AI girişimi kurucusu.'},
 {n:'Can Öztürk',r:'Blockchain Uzmanı',i:'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400',b:'Web3 ve DeFi uzmanı.'},
 {n:'Selin Arslan',r:'UX Direktörü · Meta',i:'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=400',b:'Meta UX Direktörü.'},
-{n:'Emre Şahin',r:'Siber Güvenlik · Microsoft',i:'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400',b:'Zero-trust mimarı.'},
-{n:'Deniz Ak',r:'Cloud Mimarı · AWS',i:'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400',b:'Serverless uzmanı.'},
+{n:'Emre Şahin',r:'Siber Güvenlik',i:'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400',b:'Zero-trust mimarı.'},
+{n:'Deniz Ak',r:'Cloud Mimarı',i:'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400',b:'Serverless uzmanı.'},
 {n:'Merve Yıldız',r:'Veri Bilimci · Netflix',i:'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400',b:'Öneri sistemleri uzmanı.'}
 ];
 
-// 1. BANNER
+// 1 BANNER
 function b1(){
   var nav=$('.nav');if(!nav||$('.early-banner'))return;
   var b=document.createElement('div');b.className='early-banner';
@@ -28,86 +30,18 @@ function b1(){
   u();setInterval(u,1000);nav.parentNode.insertBefore(b,nav.nextSibling);
 }
 
-// 2. SPEAKER MODAL
+// 2 SPEAKER MODAL + 8 FAVORİ
 function b2(){
   document.addEventListener('click',function(e){
     var sp=e.target.closest('.speaker');if(!sp)return;
     var n=sp.querySelector('.speaker__name').textContent;
     var d=spData.filter(function(x){return x.n===n})[0];if(!d)return;
     var m=document.createElement('div');m.className='sp-modal active';
-    m.innerHTML='<div class="sp-modal__box"><button class="sp-modal__close">✕</button><div class="speaker-modal-img" style="background-image:url('+d.i+')"></div><div class="speaker-modal-name">'+d.n+'</div><div class="speaker-modal-role">'+d.r+'</div><div class="speaker-modal-bio">'+d.b+'</div><button class="sp-btn sp-btn--primary" style="width:100%" onclick="alert(\'✅ Eklendi\')">📅 Takvime Ekle</button></div>';
+    m.innerHTML='<div class="sp-modal__box"><button class="sp-modal__close" type="button">✕</button><div class="speaker-modal-img" style="background-image:url('+d.i+')"></div><div class="speaker-modal-name">'+d.n+'</div><div class="speaker-modal-role">'+d.r+'</div><div class="speaker-modal-bio">'+d.b+'</div></div>';
     document.body.appendChild(m);
     m.querySelector('.sp-modal__close').onclick=function(){m.remove()};
-    m.onclick=function(e){if(e.target===m)m.remove()};
+    m.onclick=function(ev){if(ev.target===m)m.remove()};
   });
-}
-
-// 3. LIVE
-function b3(){
-  var s=$('#schedule');if(!s||$('.live-section'))return;
-  var el=document.createElement('section');el.className='live-section';
-  el.innerHTML='<div class="container" style="text-align:center;position:relative;z-index:1"><span class="live-badge">CANLI</span><h2 style="font-family:monospace;font-size:2rem;margin-bottom:12px;color:#fff">Canlı <span class="grad">Yayın</span></h2><div class="live-video"></div></div>';
-  s.parentNode.insertBefore(el,s.nextSibling);
-}
-
-// 4. SPONSOR
-function b4(){
-  var sp=$('#sponsors .container');if(!sp||$('.sponsor-apply'))return;
-  var b=document.createElement('div');b.className='sponsor-apply';b.style.cssText='text-align:center;margin-top:40px';
-  b.innerHTML='<button type="button" class="sp-btn sp-btn--primary" id="spApply">🤝 Sponsor Ol</button>';
-  sp.appendChild(b);
-  b.querySelector('#spApply').onclick=function(){
-    var m=document.createElement('div');m.className='sp-modal active';
-    m.innerHTML='<div class="sp-modal__box"><button class="sp-modal__close">✕</button><h3 class="sp-modal__title">🤝 Sponsor Başvurusu</h3><form style="display:flex;flex-direction:column;gap:14px"><input placeholder="Şirket" style="padding:12px;background:var(--bg);border:1px solid var(--border);border-radius:10px;color:var(--text)"><input placeholder="E-posta" style="padding:12px;background:var(--bg);border:1px solid var(--border);border-radius:10px;color:var(--text)"><button type="button" class="sp-btn sp-btn--primary" onclick="alert(\'✅ Alındı\');this.closest(\'.sp-modal\').remove()">Gönder</button></form></div>';
-    document.body.appendChild(m);
-    m.querySelector('.sp-modal__close').onclick=function(){m.remove()};
-    m.onclick=function(e){if(e.target===m)m.remove()};
-  };
-}
-
-// 5. KUPON
-function b5(){
-  document.addEventListener('click',function(e){
-    if(!e.target.closest('.ticket-btn'))return;
-    setTimeout(function(){
-      var mo=$('#registerModal');if(!mo||$('.coupon-row'))return;
-      var f=mo.querySelector('form');if(!f)return;
-      var r=document.createElement('div');r.className='coupon-row';
-      r.innerHTML='<input id="cpF" placeholder="Kupon (ERKEN30)"><button type="button" class="sp-btn sp-btn--primary" id="cpA">Uygula</button>';
-      f.insertBefore(r,f.querySelector('button[type=submit]'));
-      r.querySelector('#cpA').onclick=function(){
-        var c=r.querySelector('#cpF').value.trim().toUpperCase();
-        var v={ERKEN30:30,STUDENT50:50,TECHFEST:15};
-        alert(v[c]?'🎉 %'+v[c]+' indirim!':'❌ Geçersiz. ERKEN30 deneyin');
-      };
-    },300);
-  });
-}
-
-// 6. PAYLAŞ
-function b6(){
-  var c=$('.cta__actions');if(!c||$('.share-row'))return;
-  var r=document.createElement('div');r.className='share-row';
-  var u=encodeURIComponent(location.href);
-  r.innerHTML='<a class="share-btn" href="https://twitter.com/intent/tweet?url='+u+'" target="_blank">𝕏</a><a class="share-btn" href="https://wa.me/?text='+u+'" target="_blank">💬</a><a class="share-btn" href="https://www.linkedin.com/sharing/share-offsite/?url='+u+'" target="_blank">💼</a><button type="button" class="share-btn" id="cpL">🔗</button>';
-  c.appendChild(r);
-  r.querySelector('#cpL').onclick=function(){navigator.clipboard.writeText(location.href);alert('🔗 Kopyalandı')};
-}
-
-// 7. iCAL
-function b7(){
-  var c=$('.cta__actions');if(!c||$('#icalBtn'))return;
-  var b=document.createElement('button');b.id='icalBtn';b.className='sp-btn sp-btn--ghost';b.textContent='📅 iCal';
-  c.appendChild(b);
-  b.onclick=function(){
-    var ic='BEGIN:VCALENDAR\nVERSION:2.0\nBEGIN:VEVENT\nUID:tf\nDTSTART:20261115T100000Z\nDTEND:20261117T180000Z\nSUMMARY:TechFest 2026\nEND:VEVENT\nEND:VCALENDAR';
-    var bl=new Blob([ic],{type:'text/calendar'});
-    var a=document.createElement('a');a.href=URL.createObjectURL(bl);a.download='tf.ics';a.click();
-  };
-}
-
-// 8. FAVORİ
-function b8(){
   setTimeout(function(){
     $$('.speaker').forEach(function(sp,i){
       if(sp.querySelector('.fav-star'))return;
@@ -124,7 +58,114 @@ function b8(){
   },800);
 }
 
-// 9. PROGRAM
+// 3 LIVE + 10 TWEET
+function b3(){
+  var s=$('#schedule');if(!s||$('.live-section'))return;
+  var el=document.createElement('section');el.className='live-section';
+  el.innerHTML='<div class="container" style="text-align:center;position:relative;z-index:1"><span class="live-badge">CANLI</span><h2 style="font-family:monospace;font-size:2rem;margin-bottom:12px;color:#fff">Canlı <span class="grad">Yayın</span></h2><div class="live-video"></div></div>';
+  s.parentNode.insertBefore(el,s.nextSibling);
+  var t=document.createElement('section');t.className='section';
+  t.innerHTML='<div class="container"><div class="section__head"><h2>Canlı <span class="grad">Tweet</span></h2></div><div class="tweet-feed" id="twF"></div></div>';
+  el.parentNode.insertBefore(t,el.nextSibling);
+  var tw=['TechFest 2026 muhteşem! 🚀','AI paneli harikaydı!','Blockchain süper!','Networking mükemmel!'];
+  var i=0;
+  function add(){
+    var f=$('#twF');if(!f)return;
+    var el2=document.createElement('div');el2.className='tweet';
+    el2.innerHTML='<div class="tweet__avatar">K</div><div class="tweet__body"><div class="tweet__user">Kullanıcı <span>@user</span></div><div class="tweet__text">'+tw[i++%4]+'</div></div>';
+    f.insertBefore(el2,f.firstChild);if(f.children.length>4)f.removeChild(f.lastChild);
+  }
+  for(var j=0;j<3;j++)add();setInterval(add,4000);
+}
+
+// 4 SPONSOR
+function b4(){
+  var sp=$('#sponsors .container');if(!sp||$('.sponsor-apply'))return;
+  var b=document.createElement('div');b.className='sponsor-apply';b.style.cssText='text-align:center;margin-top:40px';
+  b.innerHTML='<button type="button" class="sp-btn sp-btn--primary" id="spApply">🤝 Sponsor Ol</button>';
+  sp.appendChild(b);
+  b.querySelector('#spApply').onclick=function(){
+    var m=document.createElement('div');m.className='sp-modal active';
+    m.innerHTML='<div class="sp-modal__box"><button class="sp-modal__close" type="button">✕</button><h3 class="sp-modal__title">🤝 Sponsor Başvurusu</h3><form style="display:flex;flex-direction:column;gap:14px"><input placeholder="Şirket" style="padding:12px;background:var(--bg);border:1px solid var(--border);border-radius:10px;color:var(--text)"><input placeholder="E-posta" style="padding:12px;background:var(--bg);border:1px solid var(--border);border-radius:10px;color:var(--text)"><button type="button" class="sp-btn sp-btn--primary" onclick="alert(\'✅ Alındı\');this.closest(\'.sp-modal\').remove()">Gönder</button></form></div>';
+    document.body.appendChild(m);
+    m.querySelector('.sp-modal__close').onclick=function(){m.remove()};
+    m.onclick=function(ev){if(ev.target===m)m.remove()};
+  };
+}
+
+// 5 KUPON + 16 BİLET
+function b5(){
+  document.addEventListener('click',function(e){
+    var b=e.target.closest('.ticket-btn');if(b)LS.set('lt',b.dataset.ticket||'Standart');
+    if(!b)return;
+    setTimeout(function(){
+      var mo=$('#registerModal');if(!mo||$('.coupon-row'))return;
+      var f=mo.querySelector('form');if(!f)return;
+      var r=document.createElement('div');r.className='coupon-row';
+      r.innerHTML='<input id="cpF" placeholder="Kupon (ERKEN30)"><button type="button" class="sp-btn sp-btn--primary" id="cpA">Uygula</button>';
+      f.insertBefore(r,f.querySelector('button[type=submit]'));
+      r.querySelector('#cpA').onclick=function(){
+        var c=r.querySelector('#cpF').value.trim().toUpperCase();
+        var v={ERKEN30:30,STUDENT50:50,TECHFEST:15};
+        alert(v[c]?'🎉 %'+v[c]+' indirim!':'❌ Geçersiz. ERKEN30 deneyin');
+      };
+    },300);
+  });
+  setInterval(function(){
+    var st=$('#registerStatus');
+    if(st&&st.textContent.indexOf('alındı')>=0&&!$('.mt-btn')){
+      var mo=$('#registerModal');if(!mo)return;
+      var c=mo.querySelector('.modal__content');if(!c)return;
+      var b=document.createElement('button');b.className='mt-btn sp-btn sp-btn--primary';b.innerHTML='📱 Biletimi Göster';
+      b.style.cssText='margin-top:14px;width:100%';
+      c.appendChild(b);
+      b.onclick=function(){
+        var p=LS.get('prof',{});var tt=LS.get('lt','Standart');
+        var m=document.createElement('div');m.className='sp-modal active';
+        var data='TECHFEST2026-'+(p.n||'KATILIMCI')+'-'+Date.now();
+        m.innerHTML='<div class="sp-modal__box"><button class="sp-modal__close" type="button">✕</button><h3 class="sp-modal__title">🎫 Biletim</h3><p class="sp-modal__sub">'+tt+'</p><div class="ticket-card"><div class="ticket-card__name">🚀 TechFest 2026</div><div class="ticket-card__meta">15-17 Kasım · İstanbul</div><div class="qr-box" id="ticketQR"></div><div style="font-family:monospace;margin-top:12px;word-break:break-all;font-size:.75rem">'+data+'</div></div></div>';
+        document.body.appendChild(m);
+        m.querySelector('.sp-modal__close').onclick=function(){m.remove()};
+        m.onclick=function(ev){if(ev.target===m)m.remove()};
+        var qr=$('#ticketQR');
+        if(qr&&window.QRCode){QRCode.toCanvas(document.createElement('canvas'),data,{width:200,margin:1},function(err,cv){if(!err){qr.innerHTML='';qr.appendChild(cv);}else{qr.innerHTML='<div style="font-family:monospace;padding:20px;background:#fff;color:#000;border-radius:10px;font-weight:700;word-break:break-all">'+data+'</div>';}});}
+        else if(qr){qr.innerHTML='<div style="font-family:monospace;padding:20px;background:#fff;color:#000;border-radius:10px;font-weight:700;word-break:break-all">'+data+'</div>';}
+      };
+    }
+  },2000);
+}
+
+// 6-7 PAYLAŞ + iCAL + 18 KART
+function b67(){
+  var c=$('.cta__actions');if(!c)return;
+  var u=encodeURIComponent(location.href);
+  if(!$('.share-row')){
+    var r=document.createElement('div');r.className='share-row';
+    r.innerHTML='<a class="share-btn" href="https://twitter.com/intent/tweet?url='+u+'" target="_blank">𝕏</a><a class="share-btn" href="https://wa.me/?text='+u+'" target="_blank">💬</a><a class="share-btn" href="https://www.linkedin.com/sharing/share-offsite/?url='+u+'" target="_blank">💼</a><button type="button" class="share-btn" id="cpL">🔗</button>';
+    c.appendChild(r);
+    r.querySelector('#cpL').onclick=function(){navigator.clipboard.writeText(location.href);alert('🔗 Kopyalandı')};
+  }
+  if(!$('#icalBtn')){
+    var b=document.createElement('button');b.id='icalBtn';b.className='sp-btn sp-btn--ghost';b.textContent='📅 iCal';
+    c.appendChild(b);
+    b.onclick=function(){
+      var ic='BEGIN:VCALENDAR\nVERSION:2.0\nBEGIN:VEVENT\nUID:tf\nDTSTART:20261115T100000Z\nDTEND:20261117T180000Z\nSUMMARY:TechFest 2026\nEND:VEVENT\nEND:VCALENDAR';
+      var bl=new Blob([ic],{type:'text/calendar'});var a=document.createElement('a');a.href=URL.createObjectURL(bl);a.download='tf.ics';a.click();
+    };
+  }
+  if(!$('#scB')){
+    var k=document.createElement('button');k.id='scB';k.className='sp-btn sp-btn--ghost';k.textContent='🎨 Kart';
+    c.appendChild(k);
+    k.onclick=function(){
+      var m=document.createElement('div');m.className='sp-modal active';
+      m.innerHTML='<div class="sp-modal__box"><button class="sp-modal__close" type="button">✕</button><h3 class="sp-modal__title">🎨 Paylaşım Kartı</h3><div class="share-card-preview"><div class="share-card-preview__title">TechFest 2026</div><div class="share-card-preview__date">15-17 Kasım · İstanbul</div><div style="font-size:3rem">🚀</div></div></div>';
+      document.body.appendChild(m);
+      m.querySelector('.sp-modal__close').onclick=function(){m.remove()};
+    };
+  }
+}
+
+// 9 PROGRAM CHECK
 function b9(){
   setTimeout(function(){
     $$('.sched-item').forEach(function(it,i){
@@ -142,29 +183,12 @@ function b9(){
   },900);
 }
 
-// 10. TWEET
-function b10(){
-  var l=$('.live-section');if(!l)return;
-  var s=document.createElement('section');s.className='section';
-  s.innerHTML='<div class="container"><div class="section__head"><h2>Canlı <span class="grad">Tweet</span></h2></div><div class="tweet-feed" id="twF"></div></div>';
-  l.parentNode.insertBefore(s,l.nextSibling);
-  var tw=['TechFest 2026 muhteşem! #TechFest2026 🚀','AI paneli harikaydı!','Blockchain oturumu süper!','Networking mükemmel!'];
-  var i=0;
-  function add(){
-    var f=$('#twF');if(!f)return;
-    var el=document.createElement('div');el.className='tweet';
-    el.innerHTML='<div class="tweet__avatar">K</div><div class="tweet__body"><div class="tweet__user">Kullanıcı <span>@user</span></div><div class="tweet__text">'+tw[i++%4]+'</div></div>';
-    f.insertBefore(el,f.firstChild);if(f.children.length>4)f.removeChild(f.lastChild);
-  }
-  for(var j=0;j<3;j++)add();setInterval(add,4000);
-}
-
-// 11. PROFİL
+// 11 PROFİL
 function b11(){
   var b=document.createElement('button');b.className='fab';b.style.bottom='230px';b.innerHTML='👤';
   document.body.appendChild(b);
-  var w=document.createElement('div');w.className='profile-widget';w.id='pw';
-  w.innerHTML='<div class="profile-widget__header"><strong>👤 Profil</strong><button class="sp-modal__close" style="position:static;width:26px;height:26px" id="pc">✕</button></div><input id="pn" placeholder="Adınız" style="width:100%;padding:10px;background:var(--bg);border:1px solid var(--border);border-radius:10px;color:var(--text);margin-bottom:10px"><button class="sp-btn sp-btn--primary" style="width:100%" id="ps">💾 Kaydet</button>';
+  var w=document.createElement('div');w.className='profile-widget';
+  w.innerHTML='<div class="profile-widget__header"><strong>👤 Profil</strong><button class="sp-modal__close" style="position:static;width:26px;height:26px" id="pc" type="button">✕</button></div><input id="pn" placeholder="Adınız" style="width:100%;padding:10px;background:var(--bg);border:1px solid var(--border);border-radius:10px;color:var(--text);margin-bottom:10px"><button class="sp-btn sp-btn--primary" style="width:100%" id="ps" type="button">💾 Kaydet</button>';
   document.body.appendChild(w);
   b.onclick=function(){
     w.classList.toggle('open');
@@ -174,7 +198,7 @@ function b11(){
   $('#ps').onclick=function(){LS.set('prof',{n:$('#pn').value});alert('✅ Kaydedildi');w.classList.remove('open')};
 }
 
-// 12. AI NETWORK
+// 12 AI
 function b12(){
   var v=$('#venue');if(!v||$('.ai-network'))return;
   var s=document.createElement('section');s.className='section section--alt ai-network';
@@ -182,7 +206,7 @@ function b12(){
   v.parentNode.insertBefore(s,v.nextSibling);
 }
 
-// 13. FOTO
+// 13 FOTO
 function b13(){
   var g=$('#gallery .container');if(!g||$('.upload-zone'))return;
   var w=document.createElement('div');w.style.marginTop='32px';
@@ -199,7 +223,7 @@ function b13(){
   };
 }
 
-// 14. ANKET
+// 14 ANKET
 function b14(){
   var t=$('#testimonials');if(!t||$('.poll-box'))return;
   var s=document.createElement('section');s.className='section';
@@ -213,13 +237,13 @@ function b14(){
       return '<div class="poll-option" data-id="'+o.id+'"><div class="poll-option__fill" style="width:'+p+'%"></div><div class="poll-option__content"><span>'+o.t+'</span><span class="poll-option__pct">'+p+'%</span></div></div>';
     }).join('');
     l.querySelectorAll('.poll-option').forEach(function(el){
-      el.onclick=function(){if(LS.get('vt',null))return;LS.set('vt',el.dataset.id);alert('✅ Oyunuz kaydedildi');r()};
+      el.onclick=function(){if(LS.get('vt',null))return;LS.set('vt',el.dataset.id);alert('✅ Kaydedildi');r()};
     });
   }
   r();
 }
 
-// 15. Q&A
+// 15 Q&A
 function b15(){
   var f=$('#faq');if(!f||$('.qa-list'))return;
   var s=document.createElement('section');s.className='section section--alt';
@@ -228,44 +252,7 @@ function b15(){
   if($('#qb'))$('#qb').onclick=function(){alert('✅ Gönderildi');$('#qt').value=''};
 }
 
-// 16. BİLET
-function b16(){
-  document.addEventListener('click',function(e){
-    var b=e.target.closest('.ticket-btn');if(b)LS.set('lt',b.dataset.ticket||'Standart');
-  });
-  setInterval(function(){
-    var st=$('#registerStatus');
-    if(st&&st.textContent.indexOf('alındı')>=0&&!$('.mt-btn')){
-      var mo=$('#registerModal');if(!mo)return;
-      var c=mo.querySelector('.modal__content');if(!c)return;
-      var b=document.createElement('button');b.className='mt-btn sp-btn sp-btn--primary';b.innerHTML='📱 Biletimi Göster';
-      b.style.cssText='margin-top:14px;width:100%';
-      c.appendChild(b);
-      b.onclick=function(){
-        var p=LS.get('prof',{});var tt=LS.get('lt','Standart');
-        var m=document.createElement('div');m.className='sp-modal active';
-        var data='TECHFEST2026-'+(p.n||'KATILIMCI')+'-'+Date.now();
-        m.innerHTML='<div class="sp-modal__box"><button class="sp-modal__close">✕</button><h3 class="sp-modal__title">🎫 Biletim</h3><p class="sp-modal__sub">'+tt+'</p><div class="ticket-card"><div class="ticket-card__name">🚀 TechFest 2026</div><div class="ticket-card__meta">15-17 Kasım · İstanbul</div><div class="qr-box" id="ticketQR"></div><div style="font-family:monospace;margin-top:12px;word-break:break-all;font-size:.75rem">'+data+'</div></div><button type="button" class="sp-btn sp-btn--ghost" style="width:100%;margin-top:14px" onclick="window.print()">🖨️ Yazdır</button></div>';
-        document.body.appendChild(m);
-        m.querySelector('.sp-modal__close').onclick=function(){m.remove()};
-        m.onclick=function(e){if(e.target===m)m.remove()};
-        var qr=$('#ticketQR');
-        if(qr){
-          if(window.QRCode){
-            QRCode.toCanvas(document.createElement('canvas'),data,{width:200,margin:1,color:{dark:'#000000',light:'#ffffff'}},function(err,cv){
-              if(!err){qr.innerHTML='';qr.appendChild(cv);}
-              else{qr.innerHTML='<div style="font-family:monospace;font-size:.9rem;padding:20px;background:#fff;color:#000;border-radius:10px;font-weight:700;max-width:220px;word-break:break-all">'+data+'</div>';}
-            });
-          }else{
-            qr.innerHTML='<div style="font-family:monospace;font-size:.9rem;padding:20px;background:#fff;color:#000;border-radius:10px;font-weight:700;max-width:220px;word-break:break-all">'+data+'</div>';
-          }
-        }
-      };
-    }
-  },2000);
-}
-
-// 17. DİL
+// 17 DİL
 function b17(){
   var a=$('.nav__actions');if(!a||$('.lang-switch'))return;
   var sw=document.createElement('div');sw.className='lang-switch';
@@ -280,36 +267,19 @@ function b17(){
   });
 }
 
-// 18. KART
-function b18(){
-  var c=$('.cta__actions');if(!c||$('#scB'))return;
-  var b=document.createElement('button');b.id='scB';b.className='sp-btn sp-btn--ghost';b.textContent='🎨 Kart';
-  c.appendChild(b);
-  b.onclick=function(){
-    var m=document.createElement('div');m.className='sp-modal active';
-    m.innerHTML='<div class="sp-modal__box"><button class="sp-modal__close">✕</button><h3 class="sp-modal__title">🎨 Paylaşım Kartı</h3><div class="share-card-preview"><div class="share-card-preview__title">TechFest 2026</div><div class="share-card-preview__date">15-17 Kasım · İstanbul</div><div style="font-size:3rem">🚀</div></div></div>';
-    document.body.appendChild(m);
-    m.querySelector('.sp-modal__close').onclick=function(){m.remove()};
-    m.onclick=function(e){if(e.target===m)m.remove()};
-  };
-}
-
-// 19. HIZLI
+// 19 HIZLI + 20 YUKARI
 function b19(){
-  var h=$('.hero__cta');if(!h||$('.quick-actions'))return;
-  var w=document.createElement('div');w.className='quick-actions';
-  w.innerHTML='<button type="button" class="sp-btn sp-btn--ghost sp-btn--sm" onclick="alert(\'📞 info@techfest.com\')">📞 İletişim</button>';
-  h.parentNode.insertBefore(w,h.nextSibling);
+  var h=$('.hero__cta');if(h&&!$('.quick-actions')){
+    var w=document.createElement('div');w.className='quick-actions';
+    w.innerHTML='<button type="button" class="sp-btn sp-btn--ghost sp-btn--sm" onclick="alert(\'📞 info@techfest.com\')">📞 İletişim</button>';
+    h.parentNode.insertBefore(w,h.nextSibling);
+  }
+  var b=$('#fabTop');if(b)b.onclick=function(){window.scrollTo({top:0,behavior:'smooth'})};
 }
 
-// 20. YUKARI
-function b20(){
-  var b=$('#fabTop');if(!b)return;
-  b.onclick=function(){window.scrollTo({top:0,behavior:'smooth'})};
-}
-
-// 21. FOOTER MODALLAR (İletişim, Basın Kiti, Gizlilik)
+// 21 FOOTER MODALLAR
 function b21(){
   var modals={
-    'İletişim':'<h3 class="sp-modal__title">📞 İletişim</h3><p class="sp-modal__sub">Bize ulaşın</p><div style="display:flex;flex-direction:column;gap:12px;margin-top:16px"><div style="padding:14px;background:var(--bg-alt);border-radius:12px"><strong>📧 E-posta</strong><p style="color:var(--text-dim);font-size:.9rem;margin-top:4px">info@techfest.com.tr</p></div><div style="padding:14px;background:var(--bg-alt);border-radius:12px"><strong>📞 Telefon</strong><p style="color:var(--text-dim);font-size:.9rem;margin-top:4px">+90 (212) 555 00 00</p></div><div style="padding:14px;background:var(--bg-alt);border-radius:12px"><strong>📍 Adres</strong><p style="color:var(--text-dim);font-size:.9rem;margin-top:4px">Harbiye, Şişli / İstanbul</p></div><div style="padding:14px;background:var(--bg-alt);border-radius:12px"><strong>🕐 Çalışma Saatleri</strong><p style="color:var(--text-dim);font-size:.9rem;margin-top:4px">Hafta içi 09:00 - 18:00</p></div></div><button type="button" class="sp-btn sp-btn--primary" style="width:100%;margin-top:16px" onclick="window.open(\'https://wa.me/905550000000\')">💬 WhatsApp ile Yaz</button>',
-    'Basın Kiti':'<h3 class="sp-modal__title">📄 Basın Kiti</h3><p class="sp-modal__sub">TechFest 2026 hakkında tüm medya dosyaları</p><ul style="margin-top:16px;display:flex;flex-direction:column;gap:10px;list-style:none;padding:0"><li style="padding:14px;background:var(--bg-alt);border-radius:10px;display:flex;justify-content:space-between;alig
+    'İletişim':'<h3 class="sp-modal__title">📞 İletişim</h3><p class="sp-modal__sub">Bize ulaşın</p><div style="display:flex;flex-direction:column;gap:12px;margin-top:16px"><div style="padding:14px;background:var(--bg-alt);border-radius:12px"><strong>📧 E-posta</strong><p style="color:var(--text-dim);font-size:.9rem;margin-top:4px">info@techfest.com.tr</p></div><div style="padding:14px;background:var(--bg-alt);border-radius:12px"><strong>📞 Telefon</strong><p style="color:var(--text-dim);font-size:.9rem;margin-top:4px">+90 (212) 555 00 00</p></div><div style="padding:14px;background:var(--bg-alt);border-radius:12px"><strong>📍 Adres</strong><p style="color:var(--text-dim);font-size:.9rem;margin-top:4px">Harbiye, Şişli / İstanbul</p></div><div style="padding:14px;background:var(--bg-alt);border-radius:12px"><strong>🕐 Çalışma Saatleri</strong><p style="color:var(--text-dim);font-size:.9rem;margin-top:4px">Hafta içi 09:00 - 18:00</p></div></div>',
+    'Basın Kiti':'<h3 class="sp-modal__title">📄 Basın Kiti</h3><p class="sp-modal__sub">Medya dosyaları</p><ul style="margin-top:16px;display:flex;flex-direction:column;gap:10px;list-style:none;padding:0"><li style="padding:14px;background:var(--bg-alt);border-radius:10px">🎨 Logo paketi (PNG, SVG) · 2.4 MB</li><li style="padding:14px;background:var(--bg-alt);border-radius:10px">📰 Basın bülteni (PDF) · 840 KB</li><li style="padding:14px;background:var(--bg-alt);border-radius:10px">📸 Konuşmacı fotoğrafları · 12 MB</li><li style="padding:14px;background:var(--bg-alt);border-radius:10px">📋 Etkinlik bilgi dosyası · 320 KB</li><li style="padding:14px;background:var(--bg-alt);border-radius:10px">🎬 Tanıtım videosu · 45 MB</li></ul><button type="button" class="sp-btn sp-btn--primary" style="width:100%;margin-top:16px" onclick="alert(\'📥 İndiriliyor (demo)\')">📥 Tümünü İndir</button>',
+    'Gizlilik':'<h3 class="sp-modal__title">🔒 Gizlilik Politikası</h3><p class="sp-modal__sub">Son güncelleme: 1 Ekim 2026</p><div style="margin-top:16px;display:flex;flex-direction:column;gap:14px;font-size:.88rem;line-height:1.6;color:var(--text-dim);max-height:400px;overflow-y:auto"><p><strong style="color:var(--text)">1. Toplanan Bilgiler</strong><br>Kayıt sırasında ad, e-posta, te
