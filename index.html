@@ -10,7 +10,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=1" />
+<link rel="stylesheet" href="style.css?v=99" />
+<link rel="stylesheet" href="style-extra.css?v=99" />
 </head>
 <body>
 
@@ -140,9 +141,11 @@
         <button class="btn btn--ghost ticket-btn" data-ticket="VIP" data-price="6500">Bilet Al</button>
       </div>
     </div>
-    <div class="live-counter">
-      <span class="live-dot"></span>
-      <strong id="liveCount">3.847</strong> kişi kayıt oldu · Son <strong id="spotsLeft">153</strong> bilet!
+    <div class="live-counter-wrap">
+      <div class="live-counter">
+        <span class="live-dot"></span>
+        <strong id="liveCount">3.847</strong> kişi kayıt oldu · Son <strong id="spotsLeft">153</strong> bilet!
+      </div>
     </div>
   </div>
 </section>
@@ -327,7 +330,6 @@
   </div>
 </footer>
 
-<!-- KAYIT MODALI -->
 <div class="modal" id="registerModal">
   <div class="modal__content">
     <button class="modal__close" id="registerClose" type="button">✕</button>
@@ -355,7 +357,6 @@
   </div>
 </div>
 
-<!-- CANLI SOHBET -->
 <button class="fab" id="fabChat" title="Canlı Sohbet">💬</button>
 <button class="fab fab--top" id="fabTop" title="Yukarı">⬆️</button>
 
@@ -375,6 +376,7 @@
 
 <div class="toast" id="toast"></div>
 
-<script src="script.js?v=1"></script>
+<script src="script.js?v=99"></script>
+<script src="script2.js?v=99"></script>
 </body>
-  </html>
+</html>
