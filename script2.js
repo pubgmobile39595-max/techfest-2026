@@ -233,7 +233,6 @@ function b16(){
   document.addEventListener('click',function(e){
     var b=e.target.closest('.ticket-btn');if(b)LS.set('lt',b.dataset.ticket||'Standart');
   });
-  // Kayıt başarılı olunca bilet butonu
   setInterval(function(){
     var st=$('#registerStatus');
     if(st&&st.textContent.indexOf('alındı')>=0&&!$('.mt-btn')){
@@ -245,10 +244,22 @@ function b16(){
       b.onclick=function(){
         var p=LS.get('prof',{});var tt=LS.get('lt','Standart');
         var m=document.createElement('div');m.className='sp-modal active';
-        var data=encodeURIComponent('TF-'+Date.now());
-        m.innerHTML='<div class="sp-modal__box"><button class="sp-modal__close">✕</button><h3 class="sp-modal__title">🎫 Biletim</h3><p class="sp-modal__sub">'+tt+'</p><div class="ticket-card"><div class="ticket-card__name">🚀 TechFest 2026</div><div class="ticket-card__meta">15-17 Kasım · İstanbul</div><div class="qr-box"><img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data='+data+'" style="width:200px;height:200px"></div><div style="font-family:monospace;margin-top:12px">'+(p.n||'Katılımcı')+'</div></div></div>';
+        var data='TECHFEST2026-'+(p.n||'KATILIMCI')+'-'+Date.now();
+        m.innerHTML='<div class="sp-modal__box"><button class="sp-modal__close">✕</button><h3 class="sp-modal__title">🎫 Biletim</h3><p class="sp-modal__sub">'+tt+'</p><div class="ticket-card"><div class="ticket-card__name">🚀 TechFest 2026</div><div class="ticket-card__meta">15-17 Kasım · İstanbul</div><div class="qr-box" id="ticketQR"></div><div style="font-family:monospace;margin-top:12px;word-break:break-all;font-size:.75rem">'+data+'</div></div><button type="button" class="sp-btn sp-btn--ghost" style="width:100%;margin-top:14px" onclick="window.print()">🖨️ Yazdır</button></div>';
         document.body.appendChild(m);
         m.querySelector('.sp-modal__close').onclick=function(){m.remove()};
+        m.onclick=function(e){if(e.target===m)m.remove()};
+        var qr=$('#ticketQR');
+        if(qr){
+          if(window.QRCode){
+            QRCode.toCanvas(document.createElement('canvas'),data,{width:200,margin:1,color:{dark:'#000000',light:'#ffffff'}},function(err,cv){
+              if(!err){qr.innerHTML='';qr.appendChild(cv);}
+              else{qr.innerHTML='<div style="font-family:monospace;font-size:.9rem;padding:20px;background:#fff;color:#000;border-radius:10px;font-weight:700;max-width:220px;word-break:break-all">'+data+'</div>';}
+            });
+          }else{
+            qr.innerHTML='<div style="font-family:monospace;font-size:.9rem;padding:20px;background:#fff;color:#000;border-radius:10px;font-weight:700;max-width:220px;word-break:break-all">'+data+'</div>';
+          }
+        }
       };
     }
   },2000);
